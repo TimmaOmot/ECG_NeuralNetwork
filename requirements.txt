@@ -1,0 +1,14 @@
+# ECG data and numerical computing
+wfdb>=4.1,<5
+numpy>=1.26,<3
+pandas>=2.1,<3
+scipy>=1.11,<2
+matplotlib>=3.8,<4
+
+# Modeling
+scikit-learn>=1.3,<2
+torch>=2.2,<3
+
+# Notebook kernel and tests
+ipykernel>=6.25,<7
+pytest>=8,<9

@@ -1,0 +1,21 @@
+# Python environments and generated files
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Local datasets
+/data/raw/
+/data/processed/
+
+# Generated model and experiment artifacts
+/models/
+/artifacts/
+/runs/
+*.pt
+*.pth
+*.ckpt
+
+# Jupyter and operating-system metadata
+.ipynb_checkpoints/
+.DS_Store

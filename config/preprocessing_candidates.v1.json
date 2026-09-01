@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "config_version": "preprocessing-candidates.v1",
+  "dataset": {"id": "mitdb", "version": "1.0.0"},
+  "sampling_frequency_hz": 360,
+  "selected_after": "notebooks/01_exploring_ecg.ipynb",
+  "notes": "Pre-registered V1 candidates chosen after Phase 2 data exploration. Each window is asymmetric with more post-R than pre-R waveform. Window choice, filtering, and per-window normalization are validation-only experiments (implementation-plan.md Phase 2, ADR 0005).",
+  "windows": [
+    {
+      "id": "w-small",
+      "pre_samples": 72,
+      "post_samples": 144,
+      "total_samples": 216,
+      "pre_seconds": 0.2,
+      "post_seconds": 0.4,
+      "total_seconds": 0.6,
+      "rationale": "Tight QRS-centred window. Minimal neighbour-beat contamination at fast rates; may clip late T-wave morphology used to separate F and V beats."
+    },
+    {
+      "id": "w-mid",
+      "pre_samples": 90,
+      "post_samples": 162,
+      "total_samples": 252,
+      "pre_seconds": 0.25,
+      "post_seconds": 0.45,
+      "total_seconds": 0.7,
+      "rationale": "Captures the QRS plus most of the T-wave at resting heart rates while keeping the pre-R baseline short."
+    },
+    {
+      "id": "w-wide",
+      "pre_samples": 108,
+      "post_samples": 216,
+      "total_samples": 324,
+      "pre_seconds": 0.3,
+      "post_seconds": 0.6,
+      "total_seconds": 0.9,
+      "rationale": "Widest candidate. Retains the full T-wave and some ST segment; risks bleeding into the next beat in tachycardic records (e.g. 207, 208, 233)."
+    }
+  ],
+  "filter": {
+    "id": "bp-butter-0p5-40",
+    "type": "butterworth_bandpass",
+    "order": 4,
+    "low_cut_hz": 0.5,
+    "high_cut_hz": 40.0,
+    "zero_phase": true,
+    "implementation": "scipy.signal.butter + scipy.signal.filtfilt on the selected lead before windowing",
+    "rationale": "Standard ambulatory-ECG passband: rejects baseline wander below 0.5 Hz and EMG / 60 Hz mains above 40 Hz. Zero-phase filtering avoids shifting the R-peak. Compared against the raw signal in validation only."
+  }
+}
